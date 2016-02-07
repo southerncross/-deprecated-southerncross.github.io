@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://southerncross.github.io/"/>
-  <updated>2016-02-06T15:46:13.000Z</updated>
+  <updated>2016-02-07T00:59:44.000Z</updated>
   <id>http://southerncross.github.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://southerncross.github.io/2016/02/03/react-change-state-according-to-props/"/>
     <id>http://southerncross.github.io/2016/02/03/react-change-state-according-to-props/</id>
     <published>2016-02-03T00:08:21.000Z</published>
-    <updated>2016-02-06T15:46:13.000Z</updated>
+    <updated>2016-02-07T00:59:44.000Z</updated>
     <content type="html"><![CDATA[<p>假设有一个UserProfile页面，用户可以查看和编辑，一个典型的表单使用场景。像是这样：</p>
 <img src="/2016/02/03/react-change-state-according-to-props/user-profile.png" alt="一颗表单" title="一颗表单">
 <p>如果忘记 React 的种种“经验教条”，最直观的想法当然是将 name 和 email 保存在 state 里以便修改，就像这样：</p>
@@ -30,8 +30,8 @@
 <p>按照传统软件工程中的“高内聚低耦合”思想来看，上面的代码是符合规范的。name 和 email 被作为 UserProfile 的内部状态（state）封装了起来。相应地，内部状态的更新操作也理所当然地作为 UserProfile 的私有方法（onNameChange 和 onEmailChange）。对于外部而言，使用起来极为方便，只需要向 UserProfile 传递初始化的值和 submit 的回调即可，至于 name 和 email 是怎么改变的？外部组件可以完全不关心。</p>
 <p>坏处呢——不是函数式的。前端组件因为本身容易受用户直接操纵，很难做成“纯”的，通常副作用都很明显。举个例子，对于一个函数，只要限制传入的参数就可以控制它的行为，但是对于一个 input 控件，你怎么可能限制得了用户的行为呢？一个通过代码都无法控制的控件，怎么可能通过代码保证正确性呢？调试和测试自然变得很困难。</p>
 <img src="/2016/02/03/react-change-state-according-to-props/why-dont-you-fly-in-sky.jpg" alt="无法通过代码控制的控件" title="无法通过代码控制的控件">
-<p>所以，React 教育我们应该遵从“单向数据流” —— data goes down, action goes up。</p>
-<img src="/2016/02/03/react-change-state-according-to-props/single-data-flow.png" alt="单向数据流" title="单向数据流">
+<p>所以，React 教育我们应该遵从“单向数据流” —— data goes down, action goes up。即，data 向下传递过程中不可被修改（以 props 传递），修改动作必须通过调用 callback 的形式由 data 持有者完成。</p>
+<img src="/2016/02/03/react-change-state-according-to-props/single-data-flow.png" alt="佛祖穿肠过，酒肉心中留" title="佛祖穿肠过，酒肉心中留">
 <p>所以推荐的代码应该是这样的（将数据以 props 的形式传入）：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserProfile</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">   <span class="keyword">return</span> (</span><br><span class="line">     <span class="xml"><span class="tag">&lt;<span class="title">form</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">div</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="title">label</span>&gt;</span>昵称<span class="tag">&lt;/<span class="title">label</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="title">input</span> <span class="attribute">value</span>=<span class="value">&#123;this.props.name&#125;</span> <span class="attribute">onChange</span>=<span class="value">&#123;this.props.onNameChange&#125;</span>/&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">div</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="title">label</span>&gt;</span>邮箱<span class="tag">&lt;/<span class="title">label</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="title">input</span> <span class="attribute">value</span>=<span class="value">&#123;this.props.email&#125;</span> <span class="attribute">onChange</span>=<span class="value">&#123;this.props.onEmailChange&#125;</span>/&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">div</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="title">button</span> <span class="attribute">onClick</span>=<span class="value">&#123;this.props.onCancel&#125;</span>&gt;</span>取消<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="title">button</span> <span class="attribute">onClick</span>=<span class="value">&#123;this.props.onSubmit&#125;</span>&gt;</span>保存<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="title">form</span>&gt;</span></span><br><span class="line">   )</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>嗯，这样看上去就顺眼多了。<br>但是等等，name 和 email 究竟保存在哪里呢？因为涉及到修改，所以他们肯定是以 state 的形式存在于上层的某个组件里。所以说 state 是不可避免的。那保存 state 的那个组件又该怎么写呢？当然是这样了：</p>
