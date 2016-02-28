@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://southerncross.github.io/2016/02/28/setup-express-vue-boilerplate/</loc>
+    <lastmod>2016-02-28T09:00:52.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://southerncross.github.io/2016/02/14/how-to-use-h1-h2-h3/</loc>
     <lastmod>2016-02-20T05:50:49.000Z</lastmod>
   </url>
