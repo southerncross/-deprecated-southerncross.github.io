@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://southerncross.github.io/2016/08/30/dingding-isv-development-tips/</loc>
+    <lastmod>2016-08-30T15:37:22.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://southerncross.github.io/2016/02/28/setup-express-vue-boilerplate/</loc>
     <lastmod>2016-02-28T09:00:52.000Z</lastmod>
   </url>
